@@ -1,0 +1,39 @@
+<button (click)="pingApi()">Ping API</button>
+
+<pre *ngIf="responseJson">
+<code>{{ responseJson | json }}</code>
+</pre>
+
+<button (click)="tokenApi()">Get token</button>
+
+<pre *ngIf="tokenJson">
+<code>{{ tokenJson | json }}</code>
+</pre>
+
+<button (click)="testForUserData()">Get user data</button>
+
+<pre *ngIf="userData">
+<code>{{ userData | json }}</code>
+</pre>
+
+<button (click)="createUserData()">Create user data</button>
+
+<button (click)="secureURLCreate()">secureURLCreate</button>
+
+<pre *ngIf="secureURL">
+<code>{{ secureURL | json }}</code>
+</pre>
+
+<button (click)="secureURLGet()">secureURLGet</button>
+
+<button (click)="createBucket()">createBucket</button>
+
+<pre *ngIf="secureURL">
+<code>{{ bucketCreation | json }}</code>
+</pre>
+
+<label class="btn btn-default">
+  <input type="file" (change)="selectFile($event)">
+</label>
+
+<button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
