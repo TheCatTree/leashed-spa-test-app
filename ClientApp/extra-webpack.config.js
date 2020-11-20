@@ -6,7 +6,7 @@ key.startsWith(keyPrefix));
 
 let env = {};
 
-keys.foreEach(key => env[key] = JSON.stringify(process.env[key]));
+keys.forEach(key => env[key] = JSON.stringify(process.env[key]));
 
 console.log('env=', env);
 
