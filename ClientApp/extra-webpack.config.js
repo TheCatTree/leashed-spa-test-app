@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const keyPrefix = 'MYAPP_';
 
 const keys = Object.keys(process.env).filter((key) =>
-key.startsWith(KeyPrefix));
+key.startsWith(keyPrefix));
 
 let env = {};
 
