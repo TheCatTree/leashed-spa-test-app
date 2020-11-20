@@ -34,13 +34,13 @@ import { FrontPageGuard } from './auth/front-page.guard';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [FrontPageGuard] },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'profile', component: ProfileComponent, canActivate: [FrontPageGuard]},
-      { path: 'external-api', component: ExternalApiComponent, canActivate: [AuthGuard]},
-      { path: 'login', component: LoginorsignupComponent},
-    ])
+    { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [FrontPageGuard] },
+    { path: 'counter', component: CounterComponent },
+    { path: 'fetch-data', component: FetchDataComponent },
+    { path: 'profile', component: ProfileComponent, canActivate: [FrontPageGuard] },
+    { path: 'external-api', component: ExternalApiComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginorsignupComponent },
+], { relativeLinkResolution: 'legacy' })
   ],
   providers: [
     {
