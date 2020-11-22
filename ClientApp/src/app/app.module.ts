@@ -17,6 +17,8 @@ import { ExternalApiComponent } from './external-api/external-api.component';
 import { LoginorsignupComponent } from './loginorsignup/loginorsignup.component';
 import { FrontPageGuard } from './auth/front-page.guard';
 
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,7 @@ import { FrontPageGuard } from './auth/front-page.guard';
     LoginorsignupComponent
   ],
   imports: [
+    TooltipModule.forRoot(),
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
