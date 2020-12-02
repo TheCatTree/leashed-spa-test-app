@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Environment } from '../environments/environment-variables';
+import { dog } from './models/dog';
 
 @Injectable({
   providedIn: 'root'
@@ -41,11 +42,15 @@ export class ApiService {
     return this.http.get(this.api_url + '/api/pictures/image/test')
   }
 
-  makeBucket$(): Observable<any> {
-    return this.http.put(this.api_url + '/s3/test',{})
+  createDog$(dog: dog): Observable<any> {
+    return this.http.put(this.api_url + '/api/dog',dog)
   }
 
   isBlank(str) {
     return (!str || /^\s*$/.test(str));
-}
+  }
+
+  getDogs$( id: number): Observable<any> {
+    return this.http.get(this.api_url + '/user/' + id +'/dogs')
+  }
 }

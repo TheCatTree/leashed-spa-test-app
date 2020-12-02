@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api.service';
+import { dog } from '../models/dog';
 import { UploadService } from '../services/upload.service';
 
 @Component({
@@ -16,6 +17,16 @@ export class ExternalApiComponent implements OnInit {
   secureURL: string;
   bucketCreation: string;
   selectedFiles: FileList;
+  doglistJson: string;
+  userId: number;
+  createdDog: dog;
+
+  saveDog: dog = {
+    Id: null,
+    UserDataId: null,
+    name: null,
+    pictures: null
+    }
 
   constructor(private api: ApiService, private uploadService: UploadService) { }
 
@@ -48,6 +59,9 @@ export class ExternalApiComponent implements OnInit {
     this.api.getUserData$().subscribe(
       res => this.userData = res
     );
+    var obj = JSON. parse(this.userData)
+    this.userId = obj.Id;
+    console.log(this.userData);
   }
 
   createUserData() {
@@ -68,9 +82,16 @@ export class ExternalApiComponent implements OnInit {
     );
   }
 
-  createBucket(){
-    this.api.makeBucket$().subscribe(
-      res => this.bucketCreation = res
+  getUsersDogs(){
+    this.api.getDogs$(this.userId).subscribe(
+      res => this.doglistJson = res
+    );
+  }
+
+  addUsersDogs(){
+    this.saveDog.UserDataId = this.userId;
+    this.api.createDog$(this.saveDog).subscribe(
+      res => this.createdDog = res
     );
   }
 

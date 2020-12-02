@@ -26,7 +26,7 @@
 
 <button (click)="secureURLGet()">secureURLGet</button>
 
-<button (click)="createBucket()">createBucket</button>
+
 
 <pre *ngIf="secureURL">
 <code>{{ bucketCreation | json }}</code>
@@ -37,3 +37,24 @@
 </label>
 
 <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+
+<pre *ngIf="doglistJson">
+  <code>{{ doglistJson | json }}</code>
+</pre>
+
+<button (click)="getUsersDogs()">getUsersDogs</button>
+
+  <pre *ngIf="createdDog">
+    <code>{{ createdDog | json }}</code>
+  </pre>
+
+  <form #f="ngForm" (ngSubmit)="createdDog" novalidate>
+
+    <h2>Dog</h2>
+    <div class="form-group"><label for="DogName">Name</label><input id="DogName" type="text" class="form-control" [(ngModel)]="saveDog.name" name="DogName" required #name="ngModel"></div>
+
+    <button class="btn btn-primary">Save</button>
+  </form>
+
+
+
