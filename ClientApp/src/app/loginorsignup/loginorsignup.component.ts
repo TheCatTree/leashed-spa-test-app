@@ -30,4 +30,8 @@ export class LoginorsignupComponent implements OnInit {
     this.auth.signUp(this.return);
   }
 
+  onClickSubmit(userlogin){
+    console.log(userlogin.value);
+  }
+
 }

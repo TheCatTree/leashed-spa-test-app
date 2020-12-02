@@ -18,6 +18,7 @@ import { LoginorsignupComponent } from './loginorsignup/loginorsignup.component'
 import { FrontPageGuard } from './auth/front-page.guard';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ParkMapComponent } from './park-map/park-map.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     NavBarComponent,
     ProfileComponent,
     ExternalApiComponent,
-    LoginorsignupComponent
+    LoginorsignupComponent,
+    ParkMapComponent
   ],
   imports: [
     TooltipModule.forRoot(),
@@ -43,6 +45,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     { path: 'profile', component: ProfileComponent, canActivate: [FrontPageGuard] },
     { path: 'external-api', component: ExternalApiComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginorsignupComponent },
+    { path: 'map', component: ParkMapComponent },
 ], { relativeLinkResolution: 'legacy' })
   ],
   providers: [
