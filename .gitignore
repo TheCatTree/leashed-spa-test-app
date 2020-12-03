@@ -231,4 +231,4 @@ _Pvt_Extensions
 .fake/
 
 # Local Environment Variables
-ClientApp\src\environments\localhost-environment.ts
+**/environments/localhost-environment.ts
