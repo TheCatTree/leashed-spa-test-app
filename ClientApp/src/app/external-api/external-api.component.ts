@@ -59,8 +59,8 @@ export class ExternalApiComponent implements OnInit {
     this.api.getUserData$().subscribe(
       res => {
         this.userData = res;
-        var obj = JSON.parse(res)
-        this.userId = obj.id;
+        //var obj = JSON.parse(res)
+        this.userId = res.id;
         console.log("the user ID is", this.userData);
 
       }
