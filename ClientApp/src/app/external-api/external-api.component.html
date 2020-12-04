@@ -53,7 +53,7 @@
     <code>{{ createdDog | json }}</code>
   </pre>
 
-  <form #f="ngForm" (ngSubmit)="createdDog" novalidate>
+  <form #f="ngForm" (ngSubmit)="addUsersDogs()" novalidate>
 
     <h2>Dog</h2>
     <div class="form-group"><label for="DogName">Name</label><input id="DogName" type="text" class="form-control" [(ngModel)]="saveDog.name" name="DogName" required #name="ngModel"></div>
