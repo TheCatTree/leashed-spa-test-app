@@ -88,7 +88,10 @@ export class ExternalApiComponent implements OnInit {
 
   getUsersDogs(){
     this.api.getDogs$(this.userId).subscribe(
-      res => this.queryResult = res
+      res => {this.queryResult = res;
+        console.log("------------queryReults-------------");
+        console.log(this.queryResult)
+      }
     );
   }
 
