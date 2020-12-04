@@ -25,7 +25,6 @@ export class ExternalApiComponent implements OnInit {
     Id: null,
     UserDataId: null,
     name: null,
-    pictures: null
     }
 
   constructor(private api: ApiService, private uploadService: UploadService) { }
