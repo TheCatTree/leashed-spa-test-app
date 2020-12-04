@@ -92,10 +92,13 @@ export class ExternalApiComponent implements OnInit {
   }
 
   addUsersDogs(){
-    this.saveDog.UserDataId = this.userId;
-    this.api.createDog$(this.saveDog).subscribe(
+    var outDog = this.saveDog;
+    outDog.Id = 99;
+    outDog.UserDataId = this.userId;
+    this.api.createDog$(outDog).subscribe(
       res => this.createdDog = res
     );
+
   }
 
   upload() {
