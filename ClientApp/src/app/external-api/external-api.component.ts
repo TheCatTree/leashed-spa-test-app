@@ -20,6 +20,7 @@ export class ExternalApiComponent implements OnInit {
   doglistJson: string;
   userId: number;
   createdDog: dog;
+  queryResult: any = {};
 
   saveDog: dog = {
     Id: null,
@@ -87,7 +88,7 @@ export class ExternalApiComponent implements OnInit {
 
   getUsersDogs(){
     this.api.getDogs$(this.userId).subscribe(
-      res => this.doglistJson = res
+      res => this.queryResult = res
     );
   }
 

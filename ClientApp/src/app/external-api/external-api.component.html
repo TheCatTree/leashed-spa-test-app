@@ -38,8 +38,10 @@
 
 <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
 
-<pre *ngIf="doglistJson">
-  <code>{{ doglistJson | json }}</code>
+<pre *ngIf="queryResult">
+  <h3>Dogs</h3>
+
+    <code  *ngFor="let v of queryResult.items">{{ v | json }}</code>
 </pre>
 
 <button (click)="getUsersDogs()">getUsersDogs</button>
@@ -48,10 +50,6 @@
   <h3>Users Id</h3>
   <code>{{ createdDog | json }}</code>
 </pre>
-
-  <pre *ngIf="createdDog">
-    <code>{{ createdDog | json }}</code>
-  </pre>
 
   <form #f="ngForm" (ngSubmit)="addUsersDogs()" novalidate>
 
