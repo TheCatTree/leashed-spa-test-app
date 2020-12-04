@@ -43,7 +43,7 @@ export class ApiService {
   }
 
   createDog$(dog: dog): Observable<any> {
-    return this.http.put(this.api_url + '/api/dogs',dog)
+    return this.http.post(this.api_url + '/api/dogs',dog)
   }
 
   isBlank(str) {
