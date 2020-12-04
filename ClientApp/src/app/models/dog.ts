@@ -34,5 +34,4 @@ export interface dog {
   Id: number;
   name: string;
   UserDataId: number;
-  pictures: number[];
 }
