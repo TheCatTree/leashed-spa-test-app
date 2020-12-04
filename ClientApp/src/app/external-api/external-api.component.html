@@ -44,6 +44,11 @@
 
 <button (click)="getUsersDogs()">getUsersDogs</button>
 
+<pre *ngIf="createdDog">
+  <h3>Users Id</h3>
+  <code>{{ createdDog | json }}</code>
+</pre>
+
   <pre *ngIf="createdDog">
     <code>{{ createdDog | json }}</code>
   </pre>
