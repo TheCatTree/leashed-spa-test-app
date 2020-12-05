@@ -40,8 +40,7 @@
 
 <pre *ngIf="queryResult">
   <h3>Dogs</h3>
-
-    <code  *ngFor="let v of queryResult.items">{{ v | json }}</code>
+  <code>{{ queryResult | json }}</code>
 </pre>
 
 <button (click)="getUsersDogs()">getUsersDogs</button>
