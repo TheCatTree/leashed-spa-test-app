@@ -232,3 +232,10 @@ _Pvt_Extensions
 
 # Local Environment Variables
 **/environments/localhost-environment-api-keys.ts
+
+# exclude everything
+Keys/*
+
+# exception to the rule
+!Keys/.gitkeep 
+

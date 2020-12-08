@@ -1,14 +1,19 @@
+import { InterceptorService, InterceptorAddAuthenticatoin } from './interceptor.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Environment } from '../environments/environment-variables';
 import { dog } from './models/dog';
+
+
+const headers = new HttpHeaders().set(InterceptorAddAuthenticatoin,'');
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   api_url: string;
+
   constructor(private http: HttpClient) {
     this.api_url = Environment.MYAPP_API_URL;
     if(this.isBlank(this.api_url)){
@@ -18,32 +23,34 @@ export class ApiService {
 
   }
 
+
+
   ping$(): Observable<any> {
-    return this.http.get(this.api_url + '/api/parkitems/2');
+    return this.http.get(this.api_url + '/api/parkitems/2',{ headers });
   }
 
   token$(): Observable<any> {
-    return this.http.get(this.api_url + '/api/token');
+    return this.http.get(this.api_url + '/api/token',{ headers });
   }
 
   getUserData$(): Observable<any> {
-    return this.http.get(this.api_url + '/api/user')
+    return this.http.get(this.api_url + '/api/user',{ headers })
   }
 
   createtUserData$(): Observable<any> {
-    return this.http.post(this.api_url + '/api/user',{})
+    return this.http.post(this.api_url + '/api/user',{},{ headers })
   }
 
-  createSecureURL$(): Observable<any> {
-    return this.http.get(this.api_url + '/api/pictures/upload/test')
+  createSecureURL$(name: string): Observable<any> {
+    return this.http.get(this.api_url + '/api/pictures/upload/' + name,{ headers })
   }
 
   getSecureURL$(): Observable<any> {
-    return this.http.get(this.api_url + '/api/pictures/image/test')
+    return this.http.get(this.api_url + '/api/pictures/image/test',{ headers })
   }
 
   createDog$(dog: dog): Observable<any> {
-    return this.http.post(this.api_url + '/api/dogs',dog)
+    return this.http.post(this.api_url + '/api/dogs',dog,{ headers })
   }
 
   isBlank(str) {
@@ -51,6 +58,11 @@ export class ApiService {
   }
 
   getDogs$( id: number): Observable<any> {
-    return this.http.get(this.api_url + '/user/' + id +'/dogs')
+    return this.http.get(this.api_url + '/user/' + id +'/dogs',{ headers })
+  }
+
+  getImages$(): Observable<any> {
+    return this.http.get(this.api_url + '/api/pictures/images',{ headers })
   }
 }
+

@@ -21,6 +21,7 @@
 <button (click)="secureURLCreate()">secureURLCreate</button>
 
 <pre *ngIf="secureURL">
+  <h3>secure url</h3>
 <code>{{ secureURL | json }}</code>
 </pre>
 
@@ -64,4 +65,12 @@
   </form>
 
 
+<!-- Photos tab -->
+<button (click)="updateImageList()">getImages</button>
+<div role="tabpanel" class="tab-pane" id="photos">
+  <h2>Photos</h2>
+  <h2>{{sizeofimages}}</h2>
+  <img *ngFor="let image of images" src={{image.url}} class="img-thumbnail">
+  <code>{{ images | json }}</code>
 
+</div>

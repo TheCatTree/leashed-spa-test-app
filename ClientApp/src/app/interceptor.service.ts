@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 import { Observable, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
 
+export const InterceptorAddAuthenticatoin = 'X-AddAuth-Interceptor';
 export const InterceptorSkipHeader = 'X-Skip-Interceptor';
 export const InterceptorS3Header = 'X-S3-Interceptor';
 
@@ -24,10 +25,10 @@ export class InterceptorService implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
 
-  //  if (req.headers.has(InterceptorSkipHeader)) {
-   //   const headers = req.headers.delete(InterceptorSkipHeader);
-   //   return next.handle(req.clone({ headers }));
-  //  }
+    if (!req.headers.has(InterceptorAddAuthenticatoin)) {
+      const headers = req.headers.delete(InterceptorAddAuthenticatoin);
+      return next.handle(req.clone({ headers }));
+    }
 
     return this.auth.getTokenSilently$().pipe(
       mergeMap(token => {

@@ -1,7 +1,10 @@
+import { ImagesService } from './../images.service';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api.service';
 import { dog } from '../models/dog';
 import { UploadService } from '../services/upload.service';
+import { Json } from 'aws-sdk/clients/robomaker';
+import { secureURL } from '../models/secureURLResource';
 
 @Component({
   selector: 'app-external-api',
@@ -14,7 +17,9 @@ export class ExternalApiComponent implements OnInit {
   userData: string;
   userDataCreationResponse: string;
   userDataExists: boolean;
-  secureURL: string;
+  secureURL: secureURL;
+  images :secureURL[];
+  sizeofimages: number;
   bucketCreation: string;
   selectedFiles: FileList;
   doglistJson: string;
@@ -28,7 +33,7 @@ export class ExternalApiComponent implements OnInit {
     name: null,
     }
 
-  constructor(private api: ApiService, private uploadService: UploadService) { }
+  constructor(private api: ApiService, private uploadService: UploadService, private imagesService: ImagesService) { }
 
   ngOnInit() {
     this.userDataExists = false;
@@ -74,8 +79,8 @@ export class ExternalApiComponent implements OnInit {
     );
   }
 
-  secureURLCreate(){
-    this.api.createSecureURL$().subscribe(
+  secureURLCreate(name: string){
+    this.api.createSecureURL$(name).subscribe(
       res => this.secureURL = res
     );
   }
@@ -107,11 +112,28 @@ export class ExternalApiComponent implements OnInit {
 
   upload() {
     const file = this.selectedFiles.item(0);
-    this.uploadService.uploadFile(file);
+
+    this.api.createSecureURL$(file.name).subscribe(
+      res => {this.secureURL = res
+        this.imagesService.uploadImage$(file,this.secureURL.url).subscribe(
+          res => console.log(res)
+        );
+      }
+    );
+
     }
 
     selectFile(event) {
       this.selectedFiles = event.target.files;
       }
+
+  updateImageList() {
+    this.api.getImages$().subscribe(
+      res => {this.images = res;
+        this.sizeofimages = this.images.length;
+
+      }
+        );
+  }
 
 }
