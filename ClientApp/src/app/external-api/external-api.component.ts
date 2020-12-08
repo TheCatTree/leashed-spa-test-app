@@ -1,7 +1,7 @@
 import { ImagesService } from './../images.service';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api.service';
-import { dog } from '../models/dog';
+import { dog, User } from '../models/dog';
 import { UploadService } from '../services/upload.service';
 import { Json } from 'aws-sdk/clients/robomaker';
 import { secureURL } from '../models/secureURLResource';
@@ -26,6 +26,9 @@ export class ExternalApiComponent implements OnInit {
   userId: number;
   createdDog: dog;
   queryResult: any = {};
+  users: User[];
+  friend: number;
+  friendsResult: User[];
 
   saveDog: dog = {
     Id: null,
@@ -125,6 +128,23 @@ export class ExternalApiComponent implements OnInit {
 
     selectFile(event) {
       this.selectedFiles = event.target.files;
+      }
+
+      addFriend(){
+        this.api.addFriend$(this.friend).subscribe(
+        )
+      }
+
+      getUsersfriends(){
+        this.api.getfriends$().subscribe(
+          res => this.friendsResult = res
+        );
+      }
+
+      getUsers(){
+        this.api.getUsers$().subscribe(
+          res => this.users = res
+        );
       }
 
   updateImageList() {

@@ -35,3 +35,8 @@ export interface dog {
   name: string;
   UserDataId: number;
 }
+
+export interface User{
+  Id: number;
+  name: string;
+}

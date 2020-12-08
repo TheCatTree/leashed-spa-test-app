@@ -64,5 +64,17 @@ export class ApiService {
   getImages$(): Observable<any> {
     return this.http.get(this.api_url + '/api/pictures/images',{ headers })
   }
+
+  getUsers$(): Observable<any> {
+    return this.http.get(this.api_url + '/api/user/listusers',{ headers })
+  }
+
+  getfriends$(): Observable<any> {
+    return this.http.get(this.api_url + '/api/user/friends',{ headers })
+  }
+
+  addFriend$(id: number): Observable<any> {
+    return this.http.post(this.api_url + '/api/user/addFriend' + id,{},{ headers })
+  }
 }
 

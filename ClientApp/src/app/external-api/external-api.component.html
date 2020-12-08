@@ -46,6 +46,34 @@
 
 <button (click)="getUsersDogs()">getUsersDogs</button>
 
+
+<div class="well">
+  <div class="form-group">
+    <label for="make">Make</label>
+    <select name="" id="make" class="form-control" [(ngModel)]="friend" >
+      <option value=""></option>
+      <option *ngFor="let u of users" value="{{u.Id}}">{{u.name}}</option>
+    </select>
+  </div>
+  <button class="btn btn-default" (click)="addFriend()">Addfriend</button>
+</div>
+
+
+<pre *ngIf="users">
+  <h3>Users</h3>
+  <code>{{ users | json }}</code>
+</pre>
+
+<button (click)="getUsers()">getUsers</button>
+
+
+<pre *ngIf="friendsResult">
+  <h3>Dogs</h3>
+  <code>{{ friendsResult | json }}</code>
+</pre>
+
+<button (click)="getUsersfriends()">getUsersfriends</button>
+
 <pre *ngIf="userId">
   <h3>Users Id</h3>
   <code>{{ userId | json }}</code>
