@@ -82,6 +82,9 @@ export class ExternalApiComponent implements OnInit {
     );
   }
 
+  secureURLCreateNoName(){
+    this.secureURLCreate("giberish");
+  }
   secureURLCreate(name: string){
     this.api.createSecureURL$(name).subscribe(
       res => this.secureURL = res
