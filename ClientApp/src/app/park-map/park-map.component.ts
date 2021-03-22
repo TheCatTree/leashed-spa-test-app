@@ -20,10 +20,13 @@ export class ParkMapComponent implements OnInit {
 
   marker: google.maps.Marker;
   kmlLayer: google.maps.KmlLayer;
+  autocomplete: google.maps.places.Autocomplete;
   src: string;
 
   googleMapAPIKey: string;
    map: google.maps.Map;
+  infoWindow: google.maps.InfoWindow;
+
   constructor(@Inject(DOCUMENT) private document: Document,
     private renderer2: Renderer2
   ) {
@@ -31,16 +34,18 @@ export class ParkMapComponent implements OnInit {
   }
 
   ngOnInit() {
-    const url = 'https://maps.googleapis.com/maps/api/js?key=' + this.googleMapAPIKey;
-    this.src = 'https://storage.googleapis.com/dev-kml/Dog_Exercise_Restriction_Layer%20(1).kml';
+    const url = 'https://maps.googleapis.com/maps/api/js?key=' + this.googleMapAPIKey + "&libraries=places";
+
+
+    this.src = 'https://storage.googleapis.com/dev-kml/(DEV)Dog_Exercise_Restriction_Layer_polygon_test.kml';
 
     this.loadScript(url).then(() => {
-      this.loadMap()
+      this.loadMap();
     }).then(() => {
-      this.addKML()
-    })
-    .then(() => {
-      this.findMe()
+      this.addKML();
+    }).then(() => {
+      this.loadAutocomplete();
+      this.findMe();
     });
 
   }
@@ -60,7 +65,7 @@ export class ParkMapComponent implements OnInit {
       script.text = ``;
       script.onload = resolve;
       script.onerror = reject;
-      this.renderer2.appendChild(this.document.head, script);
+      this.renderer2.appendChild(this.document.body, script);
     })
   }
 
@@ -100,6 +105,47 @@ export class ParkMapComponent implements OnInit {
       preserveViewport: false,
       map: this.map
     });
+    this.kmlLayer.addListener('click',this.createInfoWindow );
+
+  }
+
+  private loadAutocomplete(){
+    const input = document.getElementById("location-search-box") as HTMLInputElement;
+    const center = { lat: this.lat, lng: this.lng };
+    const defaultBounds = {
+      north: center.lat + 0.1,
+      south: center.lat - 0.1,
+      east: center.lng + 0.1,
+      west: center.lng - 0.1,
+    };
+    const options = {
+      bounds: defaultBounds,
+      componentRestrictions: { country: "nz" },
+      fields: ["address_components", "geometry", "icon", "name"],
+      origin: center,
+      strictBounds: false,
+      types: ["establishment"],
+    };
+    this.autocomplete = new google.maps.places.Autocomplete(input, options);
+    this.autocomplete.addListener("place_changed", this.changeMapCenter.bind(this));
+    console.log("autocomplete built");
+  }
+  private changeMapCenter(){
+    console.log("changeMapCenter");
+    let place = this.autocomplete.getPlace();
+    this.marker.setPosition(place.geometry.location);
+    this.map.panTo(place.geometry.location);
+    console.log(place.geometry.location);
+
+
+  }
+
+  private createInfoWindow(event){
+    this.infoWindow = new google.maps.InfoWindow();
+    this.infoWindow.setContent(event.featureData.name);
+    console.log(event.featureData.name);
+    this.infoWindow.setPosition(event.latLng);
+    this.infoWindow.open(this.map);
   }
 
 }
