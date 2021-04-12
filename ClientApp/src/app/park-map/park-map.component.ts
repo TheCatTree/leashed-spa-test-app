@@ -6,6 +6,7 @@ import { Environment } from '../../environments/environment-variables';
 import { DOCUMENT } from '@angular/common';
 import { eventNames } from 'cluster';
 import { ApiService } from '../api.service';
+import { Park } from '../models/park.model';
 
 @Component({
   selector: 'app-park-map',
@@ -30,7 +31,7 @@ export class ParkMapComponent implements OnInit {
    map: google.maps.Map;
   infoWindow: google.maps.InfoWindow;
 
-  park: any = {};
+  park  = <Park>{};
 
   user: any = {};
 
@@ -162,19 +163,18 @@ export class ParkMapComponent implements OnInit {
     res => {
       console.log("res");
       console.log(res);
-      infoWindow.setContent(this.infoWindowFormat(res));
       this.park = res;
-
+      infoWindow.setContent(this.infoWindowFormat(this.park));
       }
     );
   }
-  infoWindowFormat(res: any): string {
+  infoWindowFormat(res: Park): string {
     var sentence =
    `Name: ${res.name} <br>
-   City: ${res.City}  <br>
+   City: ${res.city}  <br>
    Suburb: ${res.suburb} <br>
    Is Leashed?: ${res.isLeashed} <br>
-   Visitors: ${res.ParkGoers}
+   Visitors: ${JSON.stringify(res.parkGoers)}
     `;
     return sentence;
 
