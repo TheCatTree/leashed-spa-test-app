@@ -1,0 +1,19 @@
+<form [formGroup]="pictureInfoForm" (ngSubmit)="onSubmit()">
+  <h2>User Public Info Data</h2>
+  <div class="form-group">
+    <label for="pictureKey">Picture Key</label><input id="pictureKey" type="text" class="form-control" formControlName="Key" >
+    <label for="pictureIsPublic">Is the Picture Public?</label><input id="pictureIsPublic" type="check" class="form-control" formControlName="IsPublic" >
+    <label for="pictureFileName">File name</label><input id="pictureFileName" type="text" class="form-control" formControlName="FileName" >
+    <label for="pictureOwnerId">Owner Id</label><input id="pictureOwnerId" type="number" class="form-control" formControlName="OwnerId" >
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+<div class="container">
+  <div class="well">
+    <h2>user-picture-info-editor component, pictureInfo object value: </h2>
+    <code>{{input| json }}</code>
+    <hr>
+  </div>
+
+</div>

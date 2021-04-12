@@ -1,0 +1,17 @@
+<form [formGroup]="dogForm" (ngSubmit)="onSubmit()">
+  <h2>Dog</h2>
+  <div class="form-group">
+    <label for="dogName">Name</label><input id="dogName" type="text" class="form-control" formControlName="Name" >
+    <label for="dogOwnerId">Owner Id</label><input id="dogOwnerId" type="number" class="form-control" formControlName="OwnerId" >
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+<div class="container">
+  <div class="well">
+    <h2>dog-editor component, dog object value: </h2>
+    <code>{{input| json }}</code>
+    <hr>
+  </div>
+
+</div>

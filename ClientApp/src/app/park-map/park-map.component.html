@@ -5,3 +5,11 @@
     <div class="input-group mb-3">
       <input type="text" name="location-input" id="location-search-box">
     </div>
+    <div>
+      <code>{{ park | json }}</code>
+    </div>
+    <button (click)="gotoPark()">Go to Park</button>
+    <button (click)="leavePark()">Check out</button>
+    <div>
+      <code>{{ user | json }}</code>
+    </div>

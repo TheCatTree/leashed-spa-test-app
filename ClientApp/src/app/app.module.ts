@@ -19,6 +19,14 @@ import { FrontPageGuard } from './auth/front-page.guard';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ParkMapComponent } from './park-map/park-map.component';
+import { ParkEditorComponent } from './park-editor/park-editor.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UserFullInfoEditorComponent } from './user-full-info-editor/user-full-info-editor.component';
+import { UserPublicInfoEditorComponent } from './user-public-info-editor/user-public-info-editor.component';
+import { DogEditorComponent } from './dog-editor/dog-editor.component';
+import { PictureInfoEditorComponent } from './picture-info-editor/picture-info-editor.component';
+
+
 
 @NgModule({
   declarations: [
@@ -31,13 +39,20 @@ import { ParkMapComponent } from './park-map/park-map.component';
     ProfileComponent,
     ExternalApiComponent,
     LoginorsignupComponent,
-    ParkMapComponent
+    ParkMapComponent,
+    ParkEditorComponent,
+    UserFullInfoEditorComponent,
+    UserPublicInfoEditorComponent,
+    DogEditorComponent,
+    PictureInfoEditorComponent
+
   ],
   imports: [
     TooltipModule.forRoot(),
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
     { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [FrontPageGuard] },
     { path: 'counter', component: CounterComponent },

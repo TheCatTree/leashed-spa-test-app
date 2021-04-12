@@ -1,104 +1,369 @@
 <button (click)="pingApi()">Ping API</button>
+<div><code>{{responseJson | json}}</code></div>
+<br>
 
-<pre *ngIf="responseJson">
-<code>{{ responseJson | json }}</code>
-</pre>
+<br>
+  <!--  Park Items  Section -->
 
-<button (click)="tokenApi()">Get token</button>
+<div>
 
-<pre *ngIf="tokenJson">
-<code>{{ tokenJson | json }}</code>
-</pre>
+  <button (click)="getAllParks()">Get All Park Data</button>
+  <div class="container"><div class="well">
+    <h3>parksDataAll Values:</h3>
+    <code *ngFor="let p of parksDataAll">{{p | json}}</code>
+  </div></div>
+  <br>
 
-<button (click)="testForUserData()">Get user data</button>
+  <label for="parkIdBox">Park ID</label>
+  <input #parkIdBox type="number" id="parkIdBox" name="parkIdBox" min="0">
+  <button (click)="getParkById(parkIdBox.value)">Get Park {{parkIdBox.value}}</button>
+  <br>
 
-<pre *ngIf="userData">
-<code>{{ userData | json }}</code>
-</pre>
+  <label for="parknameBox">Park Name</label>
+  <input #parknameBox type="text" id="parknameBox" name="parknameBox">
+  <button (click)="getParkByName(parknameBox.value)">Get Park {{parknameBox.value}}</button>
+  <div class="container">
+    <div class="well">
+      <h3>external-api component's object, parkData value</h3>
+      <code>{{parkData | json }}</code></div>
 
-<button (click)="createUserData()">Create user data</button>
-
-<button (click)="secureURLCreateNoName()">secureURLCreate with no name</button>
-
-<pre *ngIf="secureURL">
-  <h3>secure url</h3>
-<code>{{ secureURL | json }}</code>
-</pre>
-
-<button (click)="secureURLGet()">secureURLGet</button>
-
-
-
-<pre *ngIf="secureURL">
-<code>{{ bucketCreation | json }}</code>
-</pre>
-
-<label class="btn btn-default">
-  <input type="file" (change)="selectFile($event)">
-</label>
-
-<button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
-
-<pre *ngIf="queryResult">
-  <h3>Dogs</h3>
-  <code>{{ queryResult | json }}</code>
-</pre>
-
-<button (click)="getUsersDogs()">getUsersDogs</button>
-
-
-<div class="well">
-  <div class="form-group">
-    <label for="make">Make</label>
-    <select name="" id="make" class="form-control" [(ngModel)]="friend" >
-      <option value=""></option>
-      <option *ngFor="let u of users" value="{{u.Id}}">{{u.name}}</option>
-    </select>
   </div>
-  <button class="btn btn-default" (click)="addFriend()">Addfriend</button>
-</div>
 
+  <br>
 
-<pre *ngIf="users">
-  <h3>Users</h3>
-  <code>{{ users | json }}</code>
-</pre>
+  <label for="suburbBox">Suburb to search for Parks</label>
+  <input #suburbBox type="text" id="suburbBox" name="suburbBox">
+  <button (click)="getParkBySuburb(suburbBox.value)">Find Parks in {{suburbBox.value}}</button>
+  <div class="container"><div class="well"><code>{{parkSuburb | json }}</code></div></div>
 
-<button (click)="getUsers()">getUsers</button>
+  <br>
 
+  <label for="deleteParkBox">Park Id</label>
+    <input #deleteParkBox type="number" id="deleteParkBox" name="deleteParkBox">
+    <button (click)="deletePark(deleteParkBox.value)">Delete Park {{deleteParkBox.value}}</button>
+    <div class="container"><div class="well"><code>{{parkData | json }}</code></div></div>
 
-<pre *ngIf="friendsResult">
-  <h3>Dogs</h3>
-  <code>{{ friendsResult | json }}</code>
-</pre>
+    <br>
 
-<button (click)="getUsersfriends()">getUsersfriends</button>
-
-<pre *ngIf="userId">
-  <h3>Users Id</h3>
-  <code>{{ userId | json }}</code>
-</pre>
-
-<pre *ngIf="createdDog">
-  <h3>Users Id</h3>
-  <code>{{ createdDog | json }}</code>
-</pre>
-
-  <form #f="ngForm" (ngSubmit)="addUsersDogs()" novalidate>
-
-    <h2>Dog</h2>
-    <div class="form-group"><label for="DogName">Name</label><input id="DogName" type="text" class="form-control" [(ngModel)]="saveDog.name" name="DogName" required #name="ngModel"></div>
-
-    <button class="btn btn-primary">Save</button>
-  </form>
-
-
-<!-- Photos tab -->
-<button (click)="updateImageList()">getImages</button>
-<div role="tabpanel" class="tab-pane" id="photos">
-  <h2>Photos</h2>
-  <h2>{{sizeofimages}}</h2>
-  <img *ngFor="let image of images" src={{image.url}} class="img-thumbnail">
-  <code>{{ images | json }}</code>
+  <hr>
+  <h3>Add Park</h3>
+<app-park-editor [input]="parkToAdd" (output)="addParkEvent($event)"></app-park-editor>
+<div class="container">
+  <div class="well">
+    <h2>ParkToAdd Object Value:</h2>
+    <code>
+      {{parkToAdd | json }}
+    </code>
+  </div>
 
 </div>
+
+
+  <hr>
+  <h3>Modify Park</h3>
+  <label for="ModifyparkIdBox">Park ID</label>
+  <input #ModifyparkIdBox type="number" id="ModifyparkIdBox" name="ModifyparkIdBox" min="0">
+  <button (click)="getParkByIdToModify(ModifyparkIdBox.value)">Get Park {{ModifyparkIdBox.value}}</button>
+
+  <label for="ModifyparknameBox">Park Name</label>
+  <input #ModifyparknameBox type="text" id="ModifyparknameBox" name="ModifyparknameBox">
+  <button (click)="getParkByNameToModify(ModifyparknameBox.value)">Get Park {{ModifyparknameBox.value}}</button>
+
+  <app-park-editor [input]="parkToModify" (output)="modifyParkEvent($event)"></app-park-editor>
+  <div class="container">
+    <div class="well">
+      <h2>parkToModify Object Value:</h2>
+      <code>{{parkToModify | json }}</code>
+    </div>
+  </div>
+
+
+
+</div>
+<hr>
+
+<div> <!--  User  Section -->
+
+  <button (click)="tokenApi()">Get token</button>
+  <div class="container">
+    <div class="well">
+      <h3>Authentication Token Value:</h3>
+      <pre *ngIf="tokenJson">
+        <code>{{ tokenJson | json }}</code>
+      </pre>
+    </div>
+  </div>
+
+  <button (click)="testForUserData()">Get user data</button>
+
+  <pre *ngIf="userData">
+  <code>{{ userData | json }}</code>
+  </pre>
+
+
+  <button (click)="createUserData()">Create user data (Run If Get User Data isn't Working)</button>
+
+  <button (click)="secureURLCreateNoName()">secureURLCreate with no name</button>
+
+  <pre *ngIf="secureURL">
+    <h3>secure url</h3>
+  <code>{{ secureURL | json }}</code>
+  </pre>
+
+  <button (click)="secureURLGet()">secureURLGet</button>
+
+  <hr>
+  <hr>
+
+  <label for="selectUserBox">Select User to Edit</label>
+  <input #selectUserBox type="number" id="selectUserBox" name="selectUserBox">
+  <button (click)="selectUserbyIdToEdit(selectUserBox.value)">Select User {{selectUserBox.value}}</button>
+  <div class="container"><div class="well"><code>{{userToEdit | json }}</code></div></div>
+
+  <h3>Edit User Data</h3>
+  <p>Nb: Must be the user or admin to edit</p>
+  <app-user-full-info-editor [input]="userToEdit" (output)="modifyUser($event)"></app-user-full-info-editor>
+
+  <hr>
+
+  <label for="dummyUserBox">Generate a Dummy User</label>
+  <button (click)="addDummyUser()">Add Dummy User</button>
+  <div class="container"><div class="well"><code>{{userData | json }}</code></div></div>
+
+
+  <hr>
+  <button (click)="getAllUserData()">Get All User Data</button>
+  <div class="container"><div class="well">
+    <h3>userDataAll Values:</h3>
+    <code *ngFor="let p of userDataAll">{{p | json}}</code>
+  </div></div>
+  <br>
+  <hr>
+  <button (click)="getAllPublicUserData()">Get All Public User Data</button>
+  <div class="container"><div class="well">
+    <h3>userDataPublicAll Values:</h3>
+    <code *ngFor="let p of userDataPublicAll">{{p | json}}</code>
+  </div></div>
+  <br>
+  <hr>
+  <br>
+
+  <label for="userIdBox">Get user by  ID</label>
+  <input #userIdBox type="number" id="userIdBox" name="userIdBox" min="0">
+  <button (click)="getUserDataById(userIdBox.value)">Get User {{userIdBox.value}}</button>
+  <p>Nb:must be user, or Admin</p>
+  <br>
+
+  <label for="userNameBox">Get User by Name</label>
+  <input #userNameBox type="text" id="userNameBox" name="userNameBox">
+  <button (click)="getUserDataByName(userNameBox.value)">Get User {{userNameBox.value}}</button>
+  <p>Nb:must be user, or Admin</p>
+  <div class="container">
+    <div class="well">
+      <h3>external-api component's object, userData value</h3>
+      <code>{{userData | json }}</code></div>
+
+  </div>
+  <label for="deleteUserBox">Delete User by Id</label>
+    <input #deleteUserBox type="number" id="deleteUserBox" name="deleteUserBox">
+    <button (click)="deleteUser(deleteUserBox.value)">Delete User by Id {{deleteUserBox.value}}</button>
+    <p> nb Must be, Admin, or, User</p>
+    <div class="container"><div class="well"><code>{{userData | json }}</code></div></div>
+
+    <br>
+
+  <hr>
+
+  <button (click)="getUsersfriends()">Get User Friends</button>
+  <div class="container"><div class="well">
+    <h3>Friends:</h3>
+    <code>{{responseJson | json}}</code>
+    <code *ngFor="let f of friendsResult">{{f | json}}</code>
+  </div></div>
+  <br>
+
+  <label for="addFriendBox">Add Friend by Id</label>
+    <input #addFriendBox type="number" id="addFriendBox" name="addFriendBox">
+    <button (click)="addFriendById(addFriendBox.value)">Add Friend by Id {{addFriendBox.value}}</button>
+    <div class="container"><div class="well"><code>{{userData | json }}</code></div></div>
+
+    <br>
+
+    <hr>
+    <h2>Add Friend to User by Ids, (Only works For Admins))</h2>
+    <label for="addFriendToUserBoxUser">User Ids</label>
+    <label for="addFriendToUserBoxFriend">Friend Id</label>
+      <input #addFriendToUserBoxUser type="number" id="addFriendBox" name="addFriendBox">
+      <input #addFriendToUserBoxFriend type="number" id="addFriendBox" name="addFriendBox">
+      <button (click)="addFriendToUserByIds(addFriendToUserBoxUser.value,addFriendToUserBoxFriend.value)">
+        Add {{addFriendToUserBoxFriend.value}} as friend, to {{addFriendToUserBoxUser.value}}
+      </button>
+      <div class="container"><div class="well">
+        <h3>User</h3>
+        <code>{{userData | json }}</code>
+        <br>
+        <h3>Friend</h3>
+        <code>{{FriendData | json }}</code>
+      </div>
+
+      <br>
+
+      <hr>
+
+  <label for="removeFriendBox">Remove Friend by Id</label>
+    <input #removeFriendBox type="number" id="removeFriendBox" name="removeFriendBox">
+    <button (click)="removeFriendById(removeFriendBox.value)">Delete Park {{removeFriendBox.value}}</button>
+    <div class="container"><div class="well"><code>{{userData | json }}</code></div></div>
+
+    <br>
+
+    <hr>
+    <h2>remove Friend from User by Ids, (Only works For Admins))</h2>
+    <label for="removeFriendToUserBoxUser">User Ids</label>
+    <label for="removeFriendToUserBoxFriend">Friend Id</label>
+      <input #removeFriendToUserBoxUser type="number" id="addFriendBox" name="addFriendBox">
+      <input #removeFriendToUserBoxFriend type="number" id="addFriendBox" name="addFriendBox">
+      <button (click)="removeFriendFromUserByIds(removeFriendToUserBoxUser.value,removeFriendToUserBoxFriend.value)">
+        Remove {{removeFriendToUserBoxFriend.value}} as friend, from {{removeFriendToUserBoxUser.value}}
+      </button>
+      <div class="container"><div class="well">
+        <h3>User</h3>
+        <code>{{userData | json }}</code>
+        <br>
+        <h3>Friend</h3>
+        <code>{{FriendData | json }}</code>
+      </div>
+
+    <hr>
+
+    <label for="checkInToParkBox">Check into Park</label>
+    <input #checkInToParkBox type="number" id="checkInToParkBox" name="checkInToParkBox">
+    <button (click)="checkInToParkById(checkInToParkBox.value)">Check into Park {{checkInToParkBox.value}}</button>
+    <div class="container"><div class="well"><code>{{userData | json }}</code></div></div>
+
+    <br>
+
+    <label for="leaveParkBox">Check Out of Park</label>
+
+    <button (click)="leavePark()">Leave Park</button>
+    <div class="container"><div class="well"><code>{{userData | json }}</code></div></div>
+
+    <br>
+
+    <hr>
+    <h2>Check User Into Parks by Ids, (Only works For Admins))</h2>
+    <label for="checkUserInByIdBoxUser">User Ids</label>
+    <label for="checkUserInByIdBoxPark">Park Id</label>
+      <input #checkUserInByIdBoxUser type="number" id="checkUserInByIdBoxUser" name="checkUserInByIdBoxUser">
+      <input #checkUserInByIdBoxPark type="number" id="checkUserInByIdBoxPark" name="checkUserInByIdBoxPark">
+      <button (click)="checkUserIntoParkByIds(checkUserInByIdBoxUser.value,checkUserInByIdBoxPark.value)">
+        Check User {{checkUserInByIdBoxUser.value}}, Into Park  {{checkUserInByIdBoxPark.value}}
+      </button>
+      <div class="container"><div class="well">
+        <h3>User</h3>
+        <code>{{userData | json }}</code>
+        <br>
+        <h3>Friend</h3>
+        <code>{{parkData | json }}</code>
+      </div>
+
+      <label for="checkInToParkBox">Check User Out Of Park</label>
+    <input #checkUserOutIdBox type="number" id="checkUserOutIdBox" name="checkUserOutIdBox">
+    <button (click)="checkUserOutOfPark(checkUserOutIdBox.value)">Check Out User {{checkUserOutIdBox.value}}</button>
+    <div class="container"><div class="well"><code>{{userData | json }}</code></div></div>
+
+    <br>
+
+
+
+    <hr>
+
+
+
+
+
+</div>
+
+<hr>
+
+<div> <!--  Dog  Section -->
+
+    <label for="GetDogsBox">Get Users Dogs, by Id</label>
+    <input #GetDogsBox type="number" id="GetDogsBox" name="GetDogsBox">
+    <button (click)="getUsersDogsById(GetDogsBox.value)">Get User {{GetDogsBox.value}}'s Dogs</button>
+    <div class="container"><div class="well"><code>{{userDogs | json }}</code>
+
+    </div></div>
+
+    <br>
+
+    <label for="deleteDogBox">delete Dog, by Id</label>
+    <input #deleteDogBox type="number" id="deleteDogBox" name="deleteDogBox">
+    <button (click)="deleteDogById(deleteDogBox.value)">Delete Dog {{deleteDogBox.value}}</button>
+    <div class="container"><div class="well"><code>{{userDogs | json }}</code></div></div>
+
+    <hr>
+    <p>User to Preform dog Actions on</p>
+    <label for="selectUserBox">Select User</label>
+    <input #selectUserBox type="number" id="selectUserBox" name="selectUserBox">
+    <button (click)="selectUserbyIdForDogEditor(selectUserBox.value)">Select User {{selectUserBox.value}}</button>
+    <div class="container"><div class="well"><code>{{user | json }}</code></div></div>
+
+    <button (click)="getUsersDogs()">getUsersDogs</button>
+  <pre *ngIf="queryResult">
+    <h3>Dogs</h3>
+    <code>{{ queryResult | json }}</code>
+  </pre>
+
+  <br>
+
+  <h3>Add dog to User</h3>
+  <p>Nb: Must be the user or admin to edit</p>
+  <app-dog-editor [input]="dog" (output)="addDog($event)"></app-dog-editor>
+  <div class="container"><div class="well"><code>{{user | json }}</code>
+    <code>{{dog | json }}</code>
+  </div></div>
+
+  <label for="GetDogBox">Get Dog, by Id To Edit</label>
+    <input #GetDogBox type="number" id="GetDogBox" name="GetDogBox">
+    <button (click)="getDogById(GetDogBox.value)">Get Dog {{GetDogBox.value}} to Edit</button>
+    <div class="container"><div class="well"><code>{{dog | json }}</code>
+
+    </div></div>
+
+    <br>
+
+  <hr>
+  <h3>Edit dog</h3>
+  <p>Nb: Must be the user or admin to edit</p>
+  <app-dog-editor [input]="dog" (output)="editDog($event)"></app-dog-editor>
+  <div class="container"><div class="well"><code>{{user | json }}</code>
+    <code>{{dog | json }}</code>
+  </div></div>
+
+
+</div>
+
+<hr>
+
+<div> <!--  Picture Section -->
+
+
+  <label class="btn btn-default">
+    <input type="file" (change)="selectFile($event)">
+  </label>
+
+  <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+
+  <!-- Photos tab -->
+  <button (click)="updateImageList()">getImages</button>
+  <div role="tabpanel" class="tab-pane" id="photos">
+    <h2>Photos</h2>
+    <h2>{{sizeofimages}}</h2>
+    <img *ngFor="let image of images" src={{image.url}} class="img-thumbnail">
+    <code>{{ images | json }}</code>
+
+  </div>
+
+</div>
+

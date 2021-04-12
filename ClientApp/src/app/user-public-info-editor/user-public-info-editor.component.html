@@ -1,0 +1,16 @@
+<form [formGroup]="userPublicInfoForm" (ngSubmit)="onSubmit()">
+  <h2>User Public Info Data</h2>
+  <div class="form-group">
+    <label for="userPublicInfoName">Name</label><input id="userPublicInfoName" type="text" class="form-control" formControlName="Name" >
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+<div class="container">
+  <div class="well">
+    <h2>user-Public-ingo-editor component, userPublicInfo object value: </h2>
+    <code>{{input| json }}</code>
+    <hr>
+  </div>
+
+</div>

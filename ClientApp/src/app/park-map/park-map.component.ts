@@ -1,8 +1,11 @@
+import { inject, resetFakeAsyncZone } from '@angular/core/testing';
 import { MapLoaderService } from './../map-loader.service';
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, Renderer2 } from '@angular/core';
 import { VolumeId } from 'aws-sdk/clients/storagegateway';
 import { Environment } from '../../environments/environment-variables';
 import { DOCUMENT } from '@angular/common';
+import { eventNames } from 'cluster';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-park-map',
@@ -27,8 +30,13 @@ export class ParkMapComponent implements OnInit {
    map: google.maps.Map;
   infoWindow: google.maps.InfoWindow;
 
+  park: any = {};
+
+  user: any = {};
+
+
   constructor(@Inject(DOCUMENT) private document: Document,
-    private renderer2: Renderer2
+    private renderer2: Renderer2, private api: ApiService,
   ) {
     this.googleMapAPIKey = Environment.MYAPP_GOOGLE_MAP_API_KEY;
   }
@@ -105,7 +113,7 @@ export class ParkMapComponent implements OnInit {
       preserveViewport: false,
       map: this.map
     });
-    this.kmlLayer.addListener('click',this.createInfoWindow );
+    this.kmlLayer.addListener('click',this.createInfoWindow.bind(this) );
 
   }
 
@@ -142,10 +150,65 @@ export class ParkMapComponent implements OnInit {
 
   private createInfoWindow(event){
     this.infoWindow = new google.maps.InfoWindow();
-    this.infoWindow.setContent(event.featureData.name);
-    console.log(event.featureData.name);
+    console.log("event");
+    console.log(event);
     this.infoWindow.setPosition(event.latLng);
+    this.formatDataAndInject(this.infoWindow,event);
     this.infoWindow.open(this.map);
+  }
+
+  private formatDataAndInject(infoWindow, event) {
+   this.api.getParkByName$(event.featureData.name).subscribe(
+    res => {
+      console.log("res");
+      console.log(res);
+      infoWindow.setContent(this.infoWindowFormat(res));
+      this.park = res;
+
+      }
+    );
+  }
+  infoWindowFormat(res: any): string {
+    var sentence =
+   `Name: ${res.name} <br>
+   City: ${res.City}  <br>
+   Suburb: ${res.suburb} <br>
+   Is Leashed?: ${res.isLeashed} <br>
+   Visitors: ${res.ParkGoers}
+    `;
+    return sentence;
+
+  }
+
+  gotoPark() {
+    console.log("going to Park");
+    if(this.park.hasOwnProperty('id'))
+    {
+      console.log("park has id");
+      this.api.visitPark$(this.park.id).subscribe(
+        res => this.user = res
+      );
+      this.refreshPark();
+    }
+
+  }
+
+  leavePark() {
+    this.api.leavePark$();
+    if(this.park.hasOwnProperty('id'))
+    {
+      this.refreshPark();
+    }
+
+  }
+  refreshPark() {
+    this.api.getParkByName$(this.park.name).subscribe(
+      res => {
+        console.log("res");
+        console.log(res);
+        this.park = res;
+
+        });
   }
 
 }

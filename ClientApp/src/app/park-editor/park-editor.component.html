@@ -1,0 +1,26 @@
+
+
+
+  <form [formGroup]="parkForm" (ngSubmit)="onSubmit()">
+    <h2>Park Data</h2>
+    <div class="form-group">
+      <label for="parkName">Name</label><input id="parkName" type="text" class="form-control" formControlName="Name" >
+      <label for="parkIsLeashed">Is Leashed</label><input id="parkIsLeashed" type="text" class="form-control" formControlName="IsLeashed">
+      <label for="parkRoadFront">Road Front?</label><input id="parkRoadFront" type="checkbox" class="form-control" formControlName="RoadFront">
+      <label for="parkSuburb">Suburb</label><input id="parkSuburb" type="text" class="form-control" formControlName="Suburb">
+      <label for="parkCity">City</label><input id="parkCity" type="text" class="form-control" formControlName="City">
+      <label for="parkCountry">Country</label><input id="parkCountry" type="text" class="form-control" formControlName="Country">
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+  <div class="container">
+    <div class="well">
+      <h2>park-editor component, park object value: </h2>
+      <code>{{input| json }}</code>
+      <hr>
+    </div>
+
+  </div>
+
+

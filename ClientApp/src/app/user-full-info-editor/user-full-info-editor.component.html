@@ -1,0 +1,21 @@
+<form [formGroup]="userFullInfoForm" (ngSubmit)="onSubmit()">
+    <h2>User Full Info Data</h2>
+    <div class="form-group">
+      <label for="userFullInfoName">Name</label><input id="userFullInfoName" type="text" class="form-control" formControlName="Name" >
+      <label for="userFullInfoTokenSub">TokenSub</label><input id="userFullInfoTokenSub" type="text" class="form-control" formControlName="TokenSub" >
+      <label for="userFullInfoPrivacyLevel">Privacy Level</label><input id="userFullInfoPrivacyLevel" type="text" class="form-control" formControlName="PrivacyLevel" >
+      <label for="userFullInfoPark">Park they are checked into (0 = none)</label><input id="userFullInfoPark" type="number" class="form-control" formControlName="Park" >
+
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+  <div class="container">
+    <div class="well">
+      <h2>user-full-info-editor component, userFullInfo object value: </h2>
+      <code>{{input| json }}</code>
+      <hr>
+    </div>
+
+  </div>
+
